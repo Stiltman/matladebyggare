@@ -1,5 +1,65 @@
-import { defaultIng, defaultStore } from './db.js';
-import { convertToGramsOrMl } from './logic.js';
+const defaultIng = {
+    p: {
+        nf5: { name: "Ren Mager Nötfärs (5%)", kcal: 130, p: 21, c: 0, f: 5, spice: "🥩 Tips: Stek med salt och svartpeppar.", parts: { nf5: 1.0 } },
+        nf12: { name: "Nötfärs (12%)", kcal: 180, p: 19, c: 0, f: 12, spice: "🥩 Tips: Perfekt för saftiga biffar.", parts: { nf12: 1.0 } },
+        kyckling: { name: "Kycklingfilé (stekt/ugn)", kcal: 110, p: 23, c: 0, f: 2, spice: "🍗 Tips: Krydda med paprika och curry.", parts: { kycklingfile: 1.25 } },
+        kebab_not: { name: "Kebabkött (Nöt)", kcal: 220, p: 16, c: 2, f: 16, spice: "🥙 Tips: Servera med vitlökssås.", parts: { fardig_kebab: 1.0 } },
+        kebab_kyck: { name: "Kycklingkebab", kcal: 160, p: 20, c: 2, f: 8, spice: "🥙 Tips: Utmärkt med ris.", parts: { fardig_kyckling_kebab: 1.0 } },
+        lax: { name: "Laxfilé", kcal: 170, p: 20, c: 0, f: 10, spice: "🐟 Tips: Pressa över färsk citron.", parts: { laxfile: 1.2 } },
+        halloumi: { name: "Lätt-Halloumi", kcal: 240, p: 22, c: 2, f: 16, spice: "🧀 Tips: Stek gyllenbrun.", parts: { lighthalloumi: 1.0 } },
+        tonfisk: { name: "Tonfisk i vatten", kcal: 105, p: 24, c: 0, f: 1, spice: "🐟 Tips: Blanda med lite citron.", parts: { tonfisk_burk: 1.0 } }
+    },
+    c: {
+        ris: { name: "Vitt Ris (kokt)", kcal: 130, p: 3, c: 28, f: 0.3, parts: { ris_torrt: 0.3 } },
+        pasta: { name: "Pasta / Makaroner (kokta)", kcal: 110, p: 3, c: 22, f: 0.5, parts: { pasta_torr: 0.33 } },
+        mos: { name: "Rent Potatismos", kcal: 85, p: 2, c: 17, f: 1, parts: { potatis: 1.0 } },
+        bulgur: { name: "Bulgur (kokt)", kcal: 115, p: 3, c: 22, f: 1, parts: { bulgur_torrt: 0.3 } },
+        quinoa: { name: "Quinoa (kokt)", kcal: 120, p: 4, c: 21, f: 2, parts: { quinoa_torrt: 0.3 } },
+        sallad: { name: "Salladsbädd ⚠️", kcal: 15, p: 1, c: 2, f: 0, parts: { blandsallad: 1.0 } }
+    }
+};
+
+const defaultStore = {
+    nf5: { name: "Mager Nötfärs 5%", size: 500, unit: "g", price: 85 },
+    nf12: { name: "Nötfärs 12%", size: 500, unit: "g", price: 69 },
+    tacosas: { name: "Tacosås (burk)", size: 230, unit: "g", price: 18 },
+    krossad_tomat: { name: "Krossade tomater", size: 400, unit: "g", price: 15 },
+    finkrossad_tomat: { name: "Finkrossade tomater", size: 400, unit: "g", price: 16, kcal: 32, p: 1.5, c: 5.5, f: 0.2 },
+    tomatpure: { name: "Tomatpuré", size: 200, unit: "g", price: 19, kcal: 82, p: 4.3, c: 15.0, f: 0.5 },
+    keso: { name: "Keso Standard", size: 500, unit: "g", price: 28, kcal: 98, p: 12.0, c: 1.5, f: 4.2 },
+    keso_mini: { name: "Keso Mini", size: 500, unit: "g", price: 29, kcal: 65, p: 13.0, c: 1.5, f: 0.4 },
+    lasagneplattor: { name: "Lasagneplattor", size: 500, unit: "g", price: 26, kcal: 360, p: 12.0, c: 71.0, f: 1.5, itemsPerPkg: 33 },
+    riven_ost_mager: { name: "Riven Ost (Mager 10%)", size: 400, unit: "g", price: 55, kcal: 250, p: 30.0, c: 0.0, f: 10.0 },
+    riven_ost_std: { name: "Riven Ost (Standard)", size: 400, unit: "g", price: 52, kcal: 380, p: 25.0, c: 0.0, f: 30.0 },
+    havregryn: { name: "Havregryn", size: 1000, unit: "g", price: 22, kcal: 370, p: 13.0, c: 56.0, f: 7.0 },
+    bakpulver: { name: "Bakpulver", size: 250, unit: "g", price: 14, kcal: 50, p: 0.0, c: 10.0, f: 0.0 },
+    vetemjol: { name: "Vetemjöl", size: 2000, unit: "g", price: 24, kcal: 350, p: 10.0, c: 72.0, f: 1.0 },
+    fullkornsmjol: { name: "Fullkornsmjöl", size: 1500, unit: "g", price: 28, kcal: 330, p: 12.0, c: 63.0, f: 2.0 },
+    kycklingfile: { name: "Kycklingfilé (färsk)", size: 900, unit: "g", price: 115 },
+    fardig_kyckling: { name: "Färdig Kyckling (BBQ)", size: 200, unit: "g", price: 39 },
+    fardig_kebab: { name: "Kebabkött (fryst)", size: 400, unit: "g", price: 59 },
+    fardig_kyckling_kebab: { name: "Kycklingkebab (fryst)", size: 400, unit: "g", price: 62 },
+    laxfile: { name: "Laxfilé (4-pack)", size: 500, unit: "g", price: 129 },
+    varmrokt_lax: { name: "Varmrökt lax i bit", size: 300, unit: "g", price: 95 },
+    falukorv_mager: { name: "Mager Falukorv", size: 800, unit: "g", price: 39 },
+    gradde_laktosfri: { name: "Laktosfri Matlagningsgrädde", size: 250, unit: "ml", price: 16 },
+    lighthalloumi: { name: "Lätt-Halloumi", size: 200, unit: "g", price: 32 },
+    potatis: { name: "Potatis (påse)", size: 1000, unit: "g", price: 18 },
+    kvarg_laktosfri: { name: "Laktosfri Naturell Kvarg", size: 500, unit: "g", price: 24 },
+    ris_torrt: { name: "Vitt Ris", size: 1000, unit: "g", price: 28 },
+    agg: { name: "Ägg (6-pack)", size: 6, unit: "st", price: 26, itemsPerPkg: 6 },
+    pasta_torr: { name: "Makaroner/Pasta", size: 1000, unit: "g", price: 22 },
+    blandsallad: { name: "Blandsallad i påse", size: 150, unit: "g", price: 22 },
+    rotselleri: { name: "Rotselleri", size: 500, unit: "g", price: 15 },
+    blomkal: { name: "Blomkålshuvud", size: 500, unit: "g", price: 25 },
+    matvete_torrt: { name: "Matvete/Havreris", size: 1000, unit: "g", price: 26 },
+    tonfisk_burk: { name: "Tonfisk i vatten (3-pack)", size: 420, unit: "g", price: 39 },
+    kalkon_skivad: { name: "Skivad Kalkon", size: 140, unit: "g", price: 25 },
+    formbar_fars_pkt: { name: "Formbar Färs (Veg)", size: 380, unit: "g", price: 42 },
+    quinoa_torrt: { name: "Quinoa", size: 500, unit: "g", price: 32 },
+    bulgur_torrt: { name: "Bulgur", size: 1000, unit: "g", price: 24 },
+    sojapasta_torr: { name: "Proteinbön-pasta", size: 400, unit: "g", price: 35 }
+};
 
 let dbIng = JSON.parse(localStorage.getItem('dbIng60')) || defaultIng;
 let dbStore = JSON.parse(localStorage.getItem('dbStore60')) || defaultStore;
@@ -272,7 +332,7 @@ function addCompIngredient() {
     const unit = document.getElementById('comp-item-unit').value;
     if(!dbStore[key] || rawAmount <= 0) return;
 
-    let convertedAmount = convertToGramsOrMl(key, rawAmount, unit, dbStore);
+    let convertedAmount = convertToGramsOrMl(key, rawAmount, unit);
     currentCompIngredients.push({ key: key, amount: convertedAmount, displayAmount: rawAmount, displayUnit: unit });
     calcComponent();
 }
@@ -424,13 +484,42 @@ function deleteTemplate() {
     }
 }
 
+function convertToGramsOrMl(itemKey, amount, unit) {
+    const storeItem = dbStore[itemKey];
+    if(!storeItem) return amount;
+
+    if(unit === 'st') {
+        if(storeItem.itemsPerPkg && storeItem.itemsPerPkg > 0) {
+            let weightPerPiece = storeItem.size / storeItem.itemsPerPkg;
+            return amount * weightPerPiece;
+        }
+        if(itemKey === 'lasagneplattor') return amount * 15;
+        return amount * storeItem.size;
+    }
+
+    if(unit === 'dl') {
+        if(itemKey === 'lasagneplattor' || itemKey === 'havregryn' || itemKey === 'vetemjol' || itemKey === 'fullkornsmjol') return amount * 60;
+        return amount * 100;
+    }
+    if(unit === 'msk') {
+        if(itemKey === 'tomatpure') return amount * 15;
+        if(itemKey === 'bakpulver') return amount * 12;
+        return amount * 15;
+    }
+    if(unit === 'tsk') {
+        if(itemKey === 'bakpulver') return amount * 4;
+        return amount * 5;
+    }
+    return amount;
+}
+
 function addBatchIngredient() {
     const key = document.getElementById('batch-item-select').value;
     const rawAmount = Number(document.getElementById('batch-item-amount').value);
     const unit = document.getElementById('batch-item-unit').value;
     if(!dbStore[key] || rawAmount <= 0) return;
 
-    let convertedAmount = convertToGramsOrMl(key, rawAmount, unit, dbStore);
+    let convertedAmount = convertToGramsOrMl(key, rawAmount, unit);
     currentBatchIngredients.push({ key: key, amount: convertedAmount, displayAmount: rawAmount, displayUnit: unit });
     calcBatch();
 }
@@ -963,37 +1052,6 @@ function copyToClipboard() {
     document.querySelectorAll("#lc li").forEach(li => text += "• " + li.innerText + "\n");
     navigator.clipboard.writeText(text).then(() => alert("Kopierat!"));
 }
-
-// Fäst funktioner till window för HTML-anrop
-window.switchTab = switchTab;
-window.toggleMoreMenu = toggleMoreMenu;
-window.changeLayout = changeLayout;
-window.tStyle = tStyle;
-window.saveConfig = saveConfig;
-window.clearConfig = clearConfig;
-window.loadCustomComponent = loadCustomComponent;
-window.deleteCustomComponent = deleteCustomComponent;
-window.addCompIngredient = addCompIngredient;
-window.saveCustomComponent = saveCustomComponent;
-window.loadTemplate = loadTemplate;
-window.deleteTemplate = deleteTemplate;
-window.addBatchIngredient = addBatchIngredient;
-window.sendBatchToFreezer = sendBatchToFreezer;
-window.modifyFreezer = modifyFreezer;
-window.modifyPantry = modifyPantry;
-window.usePantryItem = usePantryItem;
-window.addPlateComponent = addPlateComponent;
-window.removePlateComponent = removePlateComponent;
-window.eatPlate = eatPlate;
-window.calc = calc;
-window.sendToFreezer = sendToFreezer;
-window.saveDatabaseEdits = saveDatabaseEdits;
-window.addNewIngredient = addNewIngredient;
-window.deleteIngredient = deleteIngredient;
-window.exportDataJSON = exportDataJSON;
-window.importDataJSON = importDataJSON;
-window.printSingleLabel = printSingleLabel;
-window.copyToClipboard = copyToClipboard;
 
 document.addEventListener('DOMContentLoaded', () => {
     updateStaticTexts();

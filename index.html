@@ -9,6 +9,8 @@
 <body>
 <div class="container">
     <h1 id="app-title">Matlådebyggare 6.0</h1>
+    
+    <!-- Dator-flikar -->
     <div class="desktop-tab-bar">
         <div class="desktop-tabs-left">
             <button class="desktop-tab-btn active" onclick="switchTab('builder-tab', this)" id="tab-builder">Byggaren</button>
@@ -21,6 +23,7 @@
         </div>
     </div>
     
+    <!-- FLIK 1: BYGGAREN -->
     <div id="builder-tab" class="tab-content active">
         <div class="settings-card" style="background:#f7fafc; padding:12px; margin-bottom:15px; display:flex; gap:20px; flex-wrap:wrap;">
             <div>
@@ -40,13 +43,16 @@
                 </select>
             </div>
         </div>
+
         <div class="action-bar">
             <button class="btn-action btn-save" id="btn-save" onclick="saveConfig()">💾 Spara</button>
             <button class="btn-action" id="btn-reset" onclick="clearConfig()">🔄 Återställ</button>
             <button class="btn-freeze" id="btn-freeze" onclick="sendToFreezer()">🔮 Skicka till Frys</button>
         </div>
+        
         <div id="intro-tip" class="gbp-intro"></div>
         <div class="form-grid" id="grid"></div>
+        
         <div class="shopping-list">
             <h3 id="shopping-title"></h3>
             <div class="sg">
@@ -61,40 +67,206 @@
         <div class="kitchen-box"><strong id="kitchen-title"></strong><ul style="margin:5px 0 0 0; padding-left:20px; color:#4a5568;" id="kitchen-list"></ul></div>
     </div>
 
-    <!-- FLIKAR 2-7 (Samma som innan) -->
-    <div id="components-tab" class="tab-content"><div class="settings-card">...</div></div>
-    <div id="batch-tab" class="tab-content"><div class="settings-card">...</div></div>
-    <div id="freezer-tab" class="tab-content">...</div>
-    <div id="pantry-tab" class="tab-content">...</div>
-    <div id="schedule-tab" class="tab-content">...</div>
+    <!-- FLIK 2: KOMPONENTER -->
+    <div id="components-tab" class="tab-content">
+        <div class="settings-card">
+            <h3 style="margin-top:0; color:var(--primary);">🧩 Skapa Skräddarsydd Protein- eller Bas-komponent</h3>
+            <p style="font-size:12px; color:#4a5568;">Bygg egna sammansatta komponenter som sedan dyker upp direkt i Byggarens rullgardiner!</p>
+            
+            <div style="background:#edf2f7; padding:10px; border-radius:6px; margin-bottom:15px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <label style="margin:0; font-weight:bold;">Ladda sparad komponent:</label>
+                <select id="comp-template-select" style="flex:2; min-width:180px;"></select>
+                <button class="btn-action" style="background:var(--primary); color:white; border:none;" onclick="loadCustomComponent()">📂 Ladda</button>
+                <button class="btn-action" style="background:var(--danger); color:white; border:none;" onclick="deleteCustomComponent()">🗑️ Radera</button>
+            </div>
+
+            <div class="settings-grid">
+                <div><label>Typ av komponent</label><select id="comp-type"><option value="p">Protein-komponent</option><option value="c">Bas-komponent (Kolhydrat)</option></select></div>
+                <div><label>Komponentens namn</label><input type="text" id="comp-name" placeholder="T.ex. Vitlökspotatismos"></div>
+            </div>
+
+            <h4>Ingredienser som ingår (totalmängd för hela satsen):</h4>
+            <div id="comp-ingredients-list" style="margin-bottom: 10px;"></div>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                <select id="comp-item-select" style="flex: 2; min-width: 180px;"></select>
+                <input type="number" id="comp-item-amount" placeholder="Mängd" style="flex: 1; min-width: 80px;" value="100">
+                <select id="comp-item-unit" style="flex: 1; min-width: 90px;">
+                    <option value="g">g (gram)</option>
+                    <option value="ml">ml (milliliter)</option>
+                    <option value="dl">dl (deciliter)</option>
+                    <option value="msk">msk (matsked)</option>
+                    <option value="tsk">tsk (tesked)</option>
+                    <option value="st">st (styck/skivor)</option>
+                </select>
+                <button class="btn-action btn-save" onclick="addCompIngredient()">➕ Lägg till</button>
+            </div>
+
+            <div class="macro-card" style="margin-bottom: 15px;">
+                <strong>Beräknat näringsvärde per 100g färdig komponent:</strong>
+                <div class="mg" style="margin-top: 5px;">
+                    <div>Kcal: <span id="comp-per-kc">0</span></div>
+                    <div>Protein: <span id="comp-per-p">0</span>g</div>
+                    <div>Kolhydrater: <span id="comp-per-c">0</span>g</div>
+                    <div>Fett: <span id="comp-per-f">0</span>g</div>
+                </div>
+            </div>
+
+            <button class="btn-action btn-save" style="width:100%; background:var(--success); color:white; border:none; padding:12px; font-weight:bold;" onclick="saveCustomComponent()">💾 Spara komponent till Byggaren</button>
+        </div>
+    </div>
+
+    <!-- FLIK 3: STORKOK -->
+    <div id="batch-tab" class="tab-content">
+        <div class="settings-card">
+            <h3 id="batch-main-title" style="margin-top:0; color:var(--primary);">🥘 Bygg Storkok & Hantera Receptmallar</h3>
+            <p id="batch-sub" style="font-size:12px; color:#4a5568;">Spara dina favoriter som mallar så slipper du lägga till ingredienser en och en varje gång!</p>
+            
+            <div style="background:#edf2f7; padding:10px; border-radius:6px; margin-bottom:15px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <label id="lbl-template" style="margin:0; font-weight:bold;">Ladda sparad mall:</label>
+                <select id="template-select" style="flex:2; min-width:180px;"></select>
+                <button class="btn-action" id="btn-load-template" style="background:var(--primary); color:white; border:none;" onclick="loadTemplate()">📂 Ladda</button>
+                <button class="btn-action" id="btn-del-template" style="background:var(--danger); color:white; border:none;" onclick="deleteTemplate()">🗑️ Radera</button>
+            </div>
+
+            <div class="settings-grid">
+                <div><label id="lbl-recname">Receptets namn</label><input type="text" id="batch-name" placeholder="T.ex. Hälsosam Lasagne"></div>
+                <div><label id="lbl-yield">Antal färdiga portioner/lådor</label><input type="number" id="batch-yield" value="4" min="1" oninput="calcBatch()"></div>
+            </div>
+
+            <h4 id="lbl-batcheng">Ingredienser för hela satsen:</h4>
+            <div id="batch-ingredients-list" style="margin-bottom: 10px;"></div>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                <select id="batch-item-select" style="flex: 2; min-width: 180px;"></select>
+                <input type="number" id="batch-item-amount" placeholder="Mängd" style="flex: 1; min-width: 80px;" value="2">
+                <select id="batch-item-unit" style="flex: 1; min-width: 90px;">
+                    <option value="g">g (gram)</option>
+                    <option value="ml">ml (milliliter)</option>
+                    <option value="dl">dl (deciliter)</option>
+                    <option value="msk">msk (matsked)</option>
+                    <option value="tsk">tsk (tesked)</option>
+                    <option value="st">st (styck/skivor)</option>
+                </select>
+                <button class="btn-action btn-save" id="btn-add-ing" onclick="addBatchIngredient()">➕ Lägg till</button>
+            </div>
+
+            <div class="macro-card" style="margin-bottom: 15px;">
+                <strong id="lbl-batchcalc">Beräknat per färdig portion/låda:</strong>
+                <div class="mg" style="margin-top: 5px;">
+                    <div>Kcal: <span id="batch-per-kc">0</span></div>
+                    <div>Protein: <span id="batch-per-p">0</span>g</div>
+                    <div>Kolhydrater: <span id="batch-per-c">0</span>g</div>
+                    <div>Fett: <span id="batch-per-f">0</span>g</div>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn-freeze" id="btn-send-batch" style="flex:2;" onclick="sendBatchToFreezer()">🔮 Skicka storkok till frysen</button>
+                <button class="btn-action" id="btn-savetempl" style="flex:1; background:var(--success); color:white; border:none;" onclick="saveAsTemplate()">💾 Spara mall</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FLIK 4: FRYS -->
+    <div id="freezer-tab" class="tab-content">
+        <h3 id="freezer-title" style="color:var(--primary); margin-top:0;">❄️ Mitt Permanenta Fryslager</h3>
+        <p id="freezer-sub" style="font-size:12px; color:#718096;">Visar infrysningsdatum, storlek (ml) och utgångsdatum (3 månaders hållbarhet).</p>
+        <div id="freezer-empty-msg" style="font-style:italic; color:#718096;">Frysen är tom.</div>
+        <div class="freezer-grid" id="freezer-display-list"></div>
+    </div>
+    
+    <!-- FLIK 5: SKAFFERI -->
+    <div id="pantry-tab" class="tab-content">
+        <h3 id="pantry-title" style="color:var(--w); margin-top:0;">📦 Mitt Skafferilager</h3>
+        <p id="pantry-sub" style="font-size:12px; color:#718096;">Här ser du vad som finns kvar i skafferiet efter kub-beräkningen.</p>
+        <div id="pantry-empty-msg" style="font-style:italic; color:#718096;">Skafferiet är tomt.</div>
+        <div class="pantry-grid" id="pantry-display-list"></div>
+    </div>
+
+    <!-- FLIK 6: MATSEDEL -->
+    <div id="schedule-tab" class="tab-content">
+        <h3 id="schedule-title" style="color:var(--primary); margin-top:0;">📅 Veckomatsedel & Tallriksvy</h3>
+        <p id="schedule-sub" style="font-size:12px; color:#718096;">Bygg ihop din tallrik med flera komponenter direkt från frysen.</p>
+        <div id="schedule-summary" style="background:#ebf8ff; border:1px solid #bee3f8; padding:10px; border-radius:6px; margin-bottom:15px; font-weight:bold; color:#2b6cb0;"></div>
+        <div class="schedule-grid" id="schedule-container"></div>
+    </div>
+
+    <!-- FLIK 7: INSTÄLLNINGAR -->
     <div id="settings-tab" class="tab-content">
         <div class="settings-card">
+            <h3 id="settings-lang-title" style="margin-top:0; color:var(--primary);">🌐 Språk / Language</h3>
+            <p id="settings-lang-sub" style="font-size:12px; color:#4a5568;">Välj språk för hela applikationen:</p>
+            <select id="lang-select-box" class="lang-selector" onchange="setLanguage(this.value)" style="width:100%; max-width:250px; padding:8px; font-weight:bold;">
+                <option value="sv">Svenska</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+
+        <div class="settings-card">
             <h3 style="margin-top:0; color:var(--primary);">🔄 Data & Backup (JSON)</h3>
+            <p style="font-size:12px; color:#4a5568;">Exportera eller importera din data via en säker JSON-fil för backup eller överföring mellan enheter.</p>
+            
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
                 <button class="btn-action" style="background:var(--primary); color:white; border:none; padding:10px 15px;" onclick="exportDataJSON()">📥 Exportera JSON-backup</button>
-                <label class="btn-action" style="background:var(--success); color:white; border:none; padding:10px 15px; cursor:pointer;">
+                <label class="btn-action" style="background:var(--success); color:white; border:none; padding:10px 15px; cursor:pointer; display:inline-block; text-align:center;">
                     📤 Importera JSON <input type="file" id="import-file-input" accept=".json" onchange="importDataJSON(event)" style="display:none;">
                 </label>
             </div>
         </div>
+
+        <div class="settings-card">
+            <h3 id="settings-add-title" style="margin-top:0; color:var(--success);">➕ Lägg till ny råvara</h3>
+            <div class="settings-grid">
+                <div><label>Kategori</label><select id="new-type"><option value="p">Protein/Chark</option><option value="c">Kolhydrat/Bas</option></select></div>
+                <div><label>Namn på råvara</label><input type="text" id="new-name" placeholder="T.ex. Skivad Ost"></div>
+                <div><label>Kcal (per 100g)</label><input type="number" id="new-kcal" value="300"></div>
+                <div><label>Protein (g)</label><input type="number" id="new-p" value="25"></div>
+                <div><label>Kolhydrater (g)</label><input type="number" id="new-c" value="0"></div>
+                <div><label>Fett (g)</label><input type="number" id="new-f" value="22"></div>
+                <div><label>Pris i butik (kr)</label><input type="number" id="new-price" value="35"></div>
+                <div><label>Förpackning (g/ml)</label><input type="number" id="new-size" value="250"></div>
+                <div><label>Antal bitar/skivor i förp. (valfritt)</label><input type="number" id="new-count" placeholder="T.ex. 20"></div>
+            </div>
+            <button class="btn-action btn-save" id="btn-addsys" onclick="addNewIngredient()">💾 Lägg till i systemet</button>
+        </div>
+
+        <div class="settings-card">
+            <h3 id="settings-edit-title" style="margin-top:0;">✏️ Redigera Priser & Butiksvaror</h3>
+            <table class="settings-table" id="store-edit-table">
+                <thead>
+                    <tr>
+                        <th id="th-name">Namn (Butik)</th>
+                        <th id="th-size">Storlek</th>
+                        <th id="th-price">Pris (kr)</th>
+                        <th id="th-action">Åtgärd</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <br>
+            <button class="btn-action btn-save" id="btn-saveedits" onclick="saveDatabaseEdits()">💾 Spara alla ändringar</button>
+        </div>
     </div>
 </div>
 
+<!-- Mer-meny för mobil -->
 <div id="more-menu" class="more-menu">
-    <button class="menu-link" onclick="window.switchTab('builder-tab', this); toggleMoreMenu()">Byggaren</button>
-    <button class="menu-link" onclick="window.switchTab('components-tab', this); toggleMoreMenu()">Komponenter</button>
-    <button class="menu-link" onclick="window.switchTab('batch-tab', this); toggleMoreMenu()">Storkok</button>
-    <button class="menu-link" onclick="window.switchTab('settings-tab', this); toggleMoreMenu()">Inställningar</button>
+    <button class="menu-link" onclick="switchTab('builder-tab', this); toggleMoreMenu()">Byggaren</button>
+    <button class="menu-link" onclick="switchTab('components-tab', this); toggleMoreMenu()">Komponenter</button>
+    <button class="menu-link" onclick="switchTab('batch-tab', this); toggleMoreMenu()">Storkok</button>
+    <button class="menu-link" onclick="switchTab('settings-tab', this); toggleMoreMenu()">Inställningar</button>
 </div>
 
+<!-- Mobil bottenmeny -->
 <nav class="bottom-nav">
-    <button class="nav-item active" onclick="window.switchTab('freezer-tab', this)">Frys</button>
-    <button class="nav-item" onclick="window.switchTab('pantry-tab', this)">Skafferi</button>
-    <button class="nav-item" onclick="window.switchTab('schedule-tab', this)">Matsedel</button>
+    <button class="nav-item active" onclick="switchTab('freezer-tab', this)">Frys</button>
+    <button class="nav-item" onclick="switchTab('pantry-tab', this)">Skafferi</button>
+    <button class="nav-item" onclick="switchTab('schedule-tab', this)">Matsedel</button>
     <button class="nav-item" onclick="toggleMoreMenu()">Mer</button>
 </nav>
 
+<div class="print-section" id="print-area"></div>
+
 <script src="lang.js"></script>
-<script type="module" src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
