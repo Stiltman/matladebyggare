@@ -100,72 +100,94 @@ function loadSavedComponentsToDb() {
 }
 loadSavedComponentsToDb();
 
+function safeSetText(id, text) {
+    const el = document.getElementById(id);
+    if(el) el.innerText = text;
+}
+
 function updateStaticTexts() {
-    document.getElementById('app-title').innerText = t('title');
-    document.getElementById('tab-builder').innerText = t('tab_build');
-    document.getElementById('tab-components').innerText = "Komponenter";
-    document.getElementById('tab-batch').innerText = t('tab_batch');
-    document.getElementById('tab-freezer').innerText = t('tab_freezer');
-    document.getElementById('tab-pantry').innerText = t('tab_pantry');
-    document.getElementById('tab-schedule').innerText = t('tab_schedule');
-    document.getElementById('tab-settings').innerText = t('tab_settings');
+    safeSetText('app-title', t('title'));
+    safeSetText('tab-builder', t('tab_build'));
+    safeSetText('tab-components', "Komponenter");
+    safeSetText('tab-batch', t('tab_batch'));
+    safeSetText('tab-freezer', t('tab_freezer'));
+    safeSetText('tab-pantry', t('tab_pantry'));
+    safeSetText('tab-schedule', t('tab_schedule'));
+    safeSetText('tab-settings', t('tab_settings'));
     
-    document.getElementById('lbl-layout').innerText = t('lbl_layout');
-    document.getElementById('opt-l4').innerText = t('layout_4');
-    document.getElementById('opt-l2').innerText = t('layout_2');
-    document.getElementById('opt-l6').innerText = t('layout_6');
-    document.getElementById('opt-l10').innerText = t('layout_10');
+    safeSetText('lbl-layout', t('lbl_layout'));
+    safeSetText('opt-l4', t('layout_4'));
+    safeSetText('opt-l2', t('layout_2'));
+    safeSetText('opt-l6', t('layout_6'));
+    safeSetText('opt-l10', t('layout_10'));
     
-    document.getElementById('lbl-mode').innerText = t('lbl_mode');
-    document.getElementById('opt-m2').innerText = t('mode_2');
-    document.getElementById('opt-m1').innerText = t('mode_1');
+    safeSetText('lbl-mode', t('lbl_mode'));
+    safeSetText('opt-m2', t('mode_2'));
+    safeSetText('opt-m1', t('mode_1'));
 
-    document.getElementById('btn-save').innerText = t('btn_save');
-    document.getElementById('btn-reset').innerText = t('btn_reset');
-    document.getElementById('btn-freeze').innerText = t('btn_freeze');
-    document.getElementById('btn-copy').innerText = t('btn_copy');
-    document.getElementById('intro-tip').innerHTML = `<strong>💡 Tips:</strong> ${t('tip_intro')}`;
+    safeSetText('btn-save', t('btn_save'));
+    safeSetText('btn-reset', t('btn_reset'));
+    safeSetText('btn-freeze', t('btn_freeze'));
+    safeSetText('btn-copy', t('btn_copy'));
     
-    document.getElementById('shopping-title').innerText = t('shopping_title');
-    document.getElementById('prot-header').innerText = t('p_header');
-    document.getElementById('carb-header').innerText = t('c_header');
-    document.getElementById('price-label').innerText = t('total_price');
-    document.getElementById('kitchen-title').innerText = t('kitchen_title');
+    const tipEl = document.getElementById('intro-tip');
+    if(tipEl) tipEl.innerHTML = `<strong>💡 Tips:</strong> ${t('tip_intro')}`;
+    
+    safeSetText('shopping-title', t('shopping_title'));
+    safeSetText('prot-header', t('p_header'));
+    safeSetText('carb-header', t('c_header'));
+    safeSetText('price-label', t('total_price'));
+    safeSetText('kitchen-title', t('kitchen_title'));
 
-    document.getElementById('batch-main-title').innerText = "🥘 " + (currentLang === 'sv' ? "Bygg Storkok & Hantera Receptmallar" : "Build Batch & Manage Templates");
-    document.getElementById('batch-sub').innerText = t('lbl_template');
-    document.getElementById('lbl-template').innerText = t('lbl_template');
-    document.getElementById('btn-load-template').innerText = t('btn_load');
-    document.getElementById('btn-del-template').innerText = t('btn_delete');
-    document.getElementById('lbl-recname').innerText = t('lbl_recipe_name');
-    document.getElementById('lbl-yield').innerText = t('lbl_yield');
-    document.getElementById('lbl-batcheng').innerText = t('lbl_batch_ing');
-    document.getElementById('btn-add-ing').innerText = t('btn_add');
-    document.getElementById('lbl-batchcalc').innerText = t('lbl_batch_calc');
-    document.getElementById('btn-send-batch').innerText = t('btn_send_batch');
-    document.getElementById('btn-savetempl').innerText = t('btn_save_template');
+    safeSetText('batch-main-title', "🥘 " + (currentLang === 'sv' ? "Bygg Storkok & Hantera Receptmallar" : "Build Batch & Manage Templates"));
+    safeSetText('batch-sub', t('lbl_template'));
+    safeSetText('lbl-template', t('lbl_template'));
+    safeSetText('btn-load-template', t('btn_load'));
+    safeSetText('btn-del-template', t('btn_delete'));
+    safeSetText('lbl-recname', t('lbl_recipe_name'));
+    safeSetText('lbl-yield', t('lbl_yield'));
+    safeSetText('lbl-batcheng', t('lbl_batch_ing'));
+    safeSetText('btn-add-ing', t('btn_add'));
+    safeSetText('lbl-batchcalc', t('lbl_batch_calc'));
+    safeSetText('btn-send-batch', t('btn_send_batch'));
+    safeSetText('btn-savetempl', t('btn_save_template'));
 
-    document.getElementById('freezer-title').innerText = t('lbl_freezer_header');
-    document.getElementById('freezer-sub').innerText = t('lbl_freezer_sub');
-    document.getElementById('freezer-empty-msg').innerText = t('lbl_freezer_empty');
+    safeSetText('freezer-title', t('lbl_freezer_header'));
+    safeSetText('freezer-sub', t('lbl_freezer_sub'));
+    safeSetText('freezer-empty-msg', t('lbl_freezer_empty'));
 
-    document.getElementById('pantry-title').innerText = t('lbl_pantry_header');
-    document.getElementById('pantry-sub').innerText = t('lbl_pantry_sub');
-    document.getElementById('pantry-empty-msg').innerText = t('lbl_pantry_empty');
+    safeSetText('pantry-title', t('lbl_pantry_header'));
+    safeSetText('pantry-sub', t('lbl_pantry_sub'));
+    safeSetText('pantry-empty-msg', t('lbl_pantry_empty'));
 
-    document.getElementById('schedule-title').innerText = t('lbl_schedule_header');
-    document.getElementById('schedule-sub').innerText = t('lbl_schedule_sub');
+    safeSetText('schedule-title', t('lbl_schedule_header'));
+    safeSetText('schedule-sub', t('lbl_schedule_sub'));
 
-    document.getElementById('settings-lang-title').innerText = t('lbl_lang_header');
-    document.getElementById('settings-lang-sub').innerText = t('lbl_lang_sub');
-    document.getElementById('settings-add-title').innerText = t('lbl_add_ing_header');
-    document.getElementById('btn-addsys').innerText = t('btn_add_system');
-    document.getElementById('settings-edit-title').innerText = t('lbl_edit_header');
-    document.getElementById('th-name').innerText = t('th_name');
-    document.getElementById('th-size').innerText = t('th_size');
-    document.getElementById('th-price').innerText = t('th_price');
-    document.getElementById('th-action').innerText = t('th_action');
-    document.getElementById('btn-saveedits').innerText = t('btn_save_edits');
+    safeSetText('settings-lang-title', t('lbl_lang_header'));
+    safeSetText('settings-lang-sub', t('lbl_lang_sub'));
+    safeSetText('settings-add-title', t('lbl_add_ing_header'));
+    safeSetText('btn-addsys', t('btn_add_system'));
+    safeSetText('settings-edit-title', t('lbl_edit_header'));
+    safeSetText('th-name', t('th_name'));
+    safeSetText('th-size', t('th_size'));
+    safeSetText('th-price', t('th_price'));
+    safeSetText('th-action', t('th_action'));
+    safeSetText('btn-saveedits', t('btn_save_edits'));
+
+    safeSetText('tab-components', t('tab_components'));
+    safeSetText('comp-title-el', t('comp_title'));
+    safeSetText('comp-sub-el', t('comp_sub'));
+    safeSetText('comp-load-lbl-el', t('comp_load_lbl'));
+    safeSetText('comp-btn-load', t('btn_load'));
+    safeSetText('comp-btn-del', t('btn_delete'));
+    safeSetText('comp-type-lbl-el', t('comp_type_lbl'));
+    safeSetText('comp-type-p-opt', t('comp_type_p'));
+    safeSetText('comp-type-c-opt', t('comp_type_c'));
+    safeSetText('comp-name-lbl-el', t('comp_name_lbl'));
+    safeSetText('comp-ing-header-el', t('comp_ing_header'));
+    safeSetText('comp-btn-adding', t('btn_add'));
+    safeSetText('comp-macro-header-el', t('comp_macro_header'));
+    safeSetText('comp-btn-savecomp', t('btn_save_comp'));
     
     const langBox = document.getElementById('lang-select-box');
     if(langBox) langBox.value = currentLang;
@@ -173,7 +195,8 @@ function updateStaticTexts() {
 
 function switchTab(tabId, btn) {
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
+    const tab = document.getElementById(tabId);
+    if(tab) tab.classList.add('active');
     
     document.querySelectorAll('.desktop-tab-btn').forEach(b => {
         if(b.getAttribute('onclick').includes(tabId)) b.classList.add('active');
@@ -192,12 +215,15 @@ function switchTab(tabId, btn) {
 
 function toggleMoreMenu() {
     const menu = document.getElementById('more-menu');
-    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    if(menu) menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
 }
 
 function changeLayout() {
-    currentLayout = document.getElementById('preset-layout').value;
-    recipeMode = document.getElementById('recipe-mode').value;
+    const layoutSel = document.getElementById('preset-layout');
+    const modeSel = document.getElementById('recipe-mode');
+    if(layoutSel) currentLayout = layoutSel.value;
+    if(modeSel) recipeMode = modeSel.value;
+    
     localStorage.setItem("matladeLayout60", currentLayout);
     localStorage.setItem("matladeMode60", recipeMode);
     initBuilder();
@@ -214,8 +240,12 @@ function getLayoutConfig() {
 }
 
 function initBuilder() {
-    document.getElementById('preset-layout').value = currentLayout;
-    document.getElementById('recipe-mode').value = recipeMode;
+    const layoutSel = document.getElementById('preset-layout');
+    const modeSel = document.getElementById('recipe-mode');
+    if(layoutSel) layoutSel.value = currentLayout;
+    if(modeSel) modeSel.value = recipeMode;
+    if(!g) return;
+    
     g.innerHTML = "";
     let cfg = getLayoutConfig();
     let savedConfig = JSON.parse(localStorage.getItem("matladeConfig60")) || {};
@@ -252,12 +282,18 @@ function initBuilder() {
                 </div>
             </div>`;
         } else {
+            let visualInnerHtml = iv.s ? `
+                <div class="layer-carb" id="c${i}-vc" style="height:0%;"></div>
+                <div class="layer-protein" id="c${i}-vp" style="height:0%;"></div>
+            ` : `
+                <div class="layer-single" id="c${i}-vs" style="width:100%; height:0%; background:linear-gradient(135deg, var(--primary), var(--success)); opacity:0.85;"></div>
+            `;
+
             g.innerHTML += `
             <div class="compartment">
                 <div class="compartment-title">${t('compartment')}${i}</div>
-                <div class="cube-visual" style="height:140px;">
-                    <div class="layer-carb" id="c${i}-vc" style="height:0%;"></div>
-                    <div class="layer-protein" id="c${i}-vp" style="height:0%;"></div>
+                <div class="cube-visual" style="height:140px;" id="c${i}-box-visual">
+                    ${visualInnerHtml}
                 </div>
                 <div class="controls">
                     <div class="cg"><button class="btn ${iv.s?'active':''}" id="c${i}-s" onclick="tStyle(${i})">${iv.s?t('style_layered'):t('style_allinone')}</button></div>
@@ -277,9 +313,26 @@ function initBuilder() {
 
 function tStyle(id) {
     styles[id] = !styles[id];
-    const btn = document.getElementById(`c${id}-s`);
-    btn.innerText = styles[id] ? t('style_layered') : t('style_allinone');
-    btn.classList.toggle("active", styles[id]);
+    let visualBox = document.getElementById(`c${id}-box-visual`);
+    let btn = document.getElementById(`c${id}-s`);
+    
+    if(btn) {
+        btn.innerText = styles[id] ? t('style_layered') : t('style_allinone');
+        btn.classList.toggle("active", styles[id]);
+    }
+
+    if(visualBox) {
+        if(styles[id]) {
+            visualBox.innerHTML = `
+                <div class="layer-carb" id="c${id}-vc" style="height:0%;"></div>
+                <div class="layer-protein" id="c${id}-vp" style="height:0%;"></div>
+            `;
+        } else {
+            visualBox.innerHTML = `
+                <div class="layer-single" id="c${id}-vs" style="width:100%; height:0%; background:linear-gradient(135deg, var(--primary), var(--success)); opacity:0.85;"></div>
+            `;
+        }
+    }
     calc();
 }
 
@@ -288,9 +341,9 @@ function saveConfig() {
     let config = {};
     for (let i = 1; i <= cfg.count; i++) {
         config[i] = {
-            p: document.getElementById(`c${i}-p`).value, 
+            p: document.getElementById(`c${i}-p`)?.value || "", 
             c: document.getElementById(`c${i}-c`) ? document.getElementById(`c${i}-c`).value : "",
-            v: parseInt(document.getElementById(`c${i}-v`).value), 
+            v: parseInt(document.getElementById(`c${i}-v`)?.value || 250), 
             r: document.getElementById(`c${i}-r`) ? parseInt(document.getElementById(`c${i}-r`).value) : 100, 
             s: styles[i]
         };
@@ -327,9 +380,9 @@ function updateComponentTemplateDropdown() {
 }
 
 function addCompIngredient() {
-    const key = document.getElementById('comp-item-select').value;
-    const rawAmount = Number(document.getElementById('comp-item-amount').value);
-    const unit = document.getElementById('comp-item-unit').value;
+    const key = document.getElementById('comp-item-select')?.value;
+    const rawAmount = Math.max(1, Number(document.getElementById('comp-item-amount')?.value || 100));
+    const unit = document.getElementById('comp-item-unit')?.value || 'g';
     if(!dbStore[key] || rawAmount <= 0) return;
 
     let convertedAmount = convertToGramsOrMl(key, rawAmount, unit);
@@ -359,15 +412,15 @@ function calcComponent() {
     });
 
     let per100Factor = totalWeight > 0 ? (100 / totalWeight) : 0;
-    document.getElementById('comp-per-kc').innerText = Math.round(totalKcal * per100Factor);
-    document.getElementById('comp-per-p').innerText = Math.round(totalP * per100Factor);
-    document.getElementById('comp-per-c').innerText = Math.round(totalC * per100Factor);
-    document.getElementById('comp-per-f').innerText = Math.round(totalF * per100Factor);
+    safeSetText('comp-per-kc', Math.round(totalKcal * per100Factor));
+    safeSetText('comp-per-p', Math.round(totalP * per100Factor));
+    safeSetText('comp-per-c', Math.round(totalC * per100Factor));
+    safeSetText('comp-per-f', Math.round(totalF * per100Factor));
 }
 
 function saveCustomComponent() {
-    const name = document.getElementById('comp-name').value;
-    const type = document.getElementById('comp-type').value;
+    const name = document.getElementById('comp-name')?.value.trim();
+    const type = document.getElementById('comp-type')?.value;
     if(!name || currentCompIngredients.length === 0) return alert("Ange namn och minst en ingrediens!");
 
     let totalWeight = 0, totalKcal = 0, totalP = 0, totalC = 0, totalF = 0;
@@ -389,10 +442,10 @@ function saveCustomComponent() {
     customComponents[keyId] = {
         name: name,
         type: type,
-        kcal: Math.round(totalKcal * per100Factor),
-        p: Math.round(totalP * per100Factor),
-        c: Math.round(totalC * per100Factor),
-        f: Math.round(totalF * per100Factor),
+        kcal: Math.max(0, Math.round(totalKcal * per100Factor)),
+        p: Math.max(0, Math.round(totalP * per100Factor)),
+        c: Math.max(0, Math.round(totalC * per100Factor)),
+        f: Math.max(0, Math.round(totalF * per100Factor)),
         parts: partsMap,
         ingredients: JSON.parse(JSON.stringify(currentCompIngredients))
     };
@@ -404,7 +457,7 @@ function saveCustomComponent() {
 }
 
 function loadCustomComponent() {
-    const key = document.getElementById('comp-template-select').value;
+    const key = document.getElementById('comp-template-select')?.value;
     if(!key || !customComponents[key]) return alert("Välj en giltig komponent!");
     let comp = customComponents[key];
     document.getElementById('comp-name').value = comp.name;
@@ -414,7 +467,7 @@ function loadCustomComponent() {
 }
 
 function deleteCustomComponent() {
-    const key = document.getElementById('comp-template-select').value;
+    const key = document.getElementById('comp-template-select')?.value;
     if(!key || !customComponents[key]) return;
     if(confirm(`Vill du radera komponenten "${customComponents[key].name}"?`)) {
         delete customComponents[key];
@@ -448,8 +501,8 @@ function updateTemplateDropdown() {
 }
 
 function saveAsTemplate() {
-    const name = document.getElementById('batch-name').value;
-    const yieldCount = document.getElementById('batch-yield').value;
+    const name = document.getElementById('batch-name')?.value.trim();
+    const yieldCount = Math.max(1, Number(document.getElementById('batch-yield')?.value || 4));
     if(!name || currentBatchIngredients.length === 0) return alert("Ange receptnamn och minst en ingrediens för att spara som mall!");
     
     batchTemplates[name] = {
@@ -462,7 +515,7 @@ function saveAsTemplate() {
 }
 
 function loadTemplate() {
-    const name = document.getElementById('template-select').value;
+    const name = document.getElementById('template-select')?.value;
     if(!name || !batchTemplates[name]) return alert("Välj en giltig mall!");
     
     let tData = batchTemplates[name];
@@ -474,7 +527,7 @@ function loadTemplate() {
 }
 
 function deleteTemplate() {
-    const name = document.getElementById('template-select').value;
+    const name = document.getElementById('template-select')?.value;
     if(!name || !batchTemplates[name]) return;
     if(confirm(`Vill du radera mallen "${name}"?`)) {
         delete batchTemplates[name];
@@ -514,9 +567,9 @@ function convertToGramsOrMl(itemKey, amount, unit) {
 }
 
 function addBatchIngredient() {
-    const key = document.getElementById('batch-item-select').value;
-    const rawAmount = Number(document.getElementById('batch-item-amount').value);
-    const unit = document.getElementById('batch-item-unit').value;
+    const key = document.getElementById('batch-item-select')?.value;
+    const rawAmount = Math.max(1, Number(document.getElementById('batch-item-amount')?.value || 1));
+    const unit = document.getElementById('batch-item-unit')?.value || 'g';
     if(!dbStore[key] || rawAmount <= 0) return;
 
     let convertedAmount = convertToGramsOrMl(key, rawAmount, unit);
@@ -529,7 +582,7 @@ function calcBatch() {
     if(!listDiv) return;
     listDiv.innerHTML = "";
     let totalKcal = 0, totalP = 0, totalC = 0, totalF = 0;
-    const yieldCount = Math.max(1, Number(document.getElementById('batch-yield').value));
+    const yieldCount = Math.max(1, Number(document.getElementById('batch-yield')?.value || 1));
 
     currentBatchIngredients.forEach((ing, index) => {
         const storeItem = dbStore[ing.key];
@@ -550,15 +603,15 @@ function calcBatch() {
         totalF += factor * f100;
     });
 
-    document.getElementById('batch-per-kc').innerText = Math.round(totalKcal / yieldCount);
-    document.getElementById('batch-per-p').innerText = Math.round(totalP / yieldCount);
-    document.getElementById('batch-per-c').innerText = Math.round(totalC / yieldCount);
-    document.getElementById('batch-per-f').innerText = Math.round(totalF / yieldCount);
+    safeSetText('batch-per-kc', Math.max(0, Math.round(totalKcal / yieldCount)));
+    safeSetText('batch-per-p', Math.max(0, Math.round(totalP / yieldCount)));
+    safeSetText('batch-per-c', Math.max(0, Math.round(totalC / yieldCount)));
+    safeSetText('batch-per-f', Math.max(0, Math.round(totalF / yieldCount)));
 }
 
 function sendBatchToFreezer() {
-    const name = document.getElementById('batch-name').value || "Storkok";
-    const yieldCount = Number(document.getElementById('batch-yield').value);
+    const name = document.getElementById('batch-name')?.value.trim() || "Storkok";
+    const yieldCount = Math.max(1, Number(document.getElementById('batch-yield')?.value || 1));
     if(currentBatchIngredients.length === 0 || yieldCount <= 0) return alert("Lägg till råvaror och antal portioner!");
 
     currentBatchIngredients.forEach(ing => {
@@ -581,8 +634,12 @@ function sendBatchToFreezer() {
     const today = new Date();
     const expDate = new Date(); expDate.setMonth(today.getMonth() + 3);
     const fullName = `${name} (Storkok)`;
+    const kcVal = document.getElementById('batch-per-kc')?.innerText || "0";
+    const pVal = document.getElementById('batch-per-p')?.innerText || "0";
+    const cVal = document.getElementById('batch-per-c')?.innerText || "0";
+
     if(!permanentFreezer[fullName]) {
-        permanentFreezer[fullName] = { count: 0, kcal: document.getElementById('batch-per-kc').innerText, p: document.getElementById('batch-per-p').innerText, c: document.getElementById('batch-per-c').innerText, created: today.toLocaleDateString('sv-SE'), expires: expDate.toLocaleDateString('sv-SE') };
+        permanentFreezer[fullName] = { count: 0, kcal: kcVal, p: pVal, c: cVal, created: today.toLocaleDateString('sv-SE'), expires: expDate.toLocaleDateString('sv-SE') };
     }
     permanentFreezer[fullName].count += yieldCount;
     
@@ -820,7 +877,7 @@ function calc() {
         if(!vElem || !pElem) continue;
 
         const v = parseInt(vElem.value);
-        document.getElementById(`c${i}-vt`).innerText = v;
+        safeSetText(`c${i}-vt`, v);
         
         let maxV = cfg.maxVol;
         let containerFillPct = (v / maxV) * 100;
@@ -833,12 +890,12 @@ function calc() {
             let data = dbIng[cat] ? dbIng[cat][key] : null;
             if(!data) continue;
 
-            document.getElementById(`c${i}-kc`).innerText = Math.round(data.kcal * v / 100);
-            document.getElementById(`c${i}-gProt`).innerText = Math.round(data.p * v / 100);
-            document.getElementById(`c${i}-gCarb`).innerText = Math.round(data.c * v / 100);
-            document.getElementById(`c${i}-gFat`).innerText = Math.round(data.f * v / 100);
+            safeSetText(`c${i}-kc`, Math.max(0, Math.round(data.kcal * v / 100)));
+            safeSetText(`c${i}-gProt`, Math.max(0, Math.round(data.p * v / 100)));
+            safeSetText(`c${i}-gCarb`, Math.max(0, Math.round(data.c * v / 100)));
+            safeSetText(`c${i}-gFat`, Math.max(0, Math.round(data.f * v / 100)));
 
-            compSpecs[i] = { fullName: `${data.name} (${v} ml)`, kcal: document.getElementById(`c${i}-kc`).innerText, pG: document.getElementById(`c${i}-gProt`).innerText, cG: document.getElementById(`c${i}-gCarb`).innerText };
+            compSpecs[i] = { fullName: `${data.name} (${v} ml)`, kcal: document.getElementById(`c${i}-kc`)?.innerText || 0, pG: document.getElementById(`c${i}-gProt`)?.innerText || 0, cG: document.getElementById(`c${i}-gCarb`)?.innerText || 0 };
             
             let vs = document.getElementById(`c${i}-vs`);
             if(vs) { vs.style.height = containerFillPct + "%"; }
@@ -855,26 +912,31 @@ function calc() {
 
             const r = parseInt(rElem.value);
             const pk = pElem.value; const ck = cElem.value;
-            document.getElementById(`c${i}-rt`).innerText = r;
+            safeSetText(`c${i}-rt`, r);
             if(!dbIng.p[pk] || !dbIng.c[ck]) continue;
 
             const pv = v * (r / 100), cv = v * ((100 - r) / 100); const pd = dbIng.p[pk], cd = dbIng.c[ck];
-            document.getElementById(`c${i}-kc`).innerText = Math.round((pd.kcal*pv/100)+(cd.kcal*cv/100));
-            document.getElementById(`c${i}-gProt`).innerText = Math.round((pd.p*pv/100)+(cd.p*cv/100));
-            document.getElementById(`c${i}-gCarb`).innerText = Math.round((pd.c*pv/100)+(cd.c*cv/100));
-            document.getElementById(`c${i}-gFat`).innerText = Math.round((pd.f*pv/100)+(cd.f*cv/100));
+            safeSetText(`c${i}-kc`, Math.max(0, Math.round((pd.kcal*pv/100)+(cd.kcal*cv/100))));
+            safeSetText(`c${i}-gProt`, Math.max(0, Math.round((pd.p*pv/100)+(cd.p*cv/100))));
+            safeSetText(`c${i}-gCarb`, Math.max(0, Math.round((pd.c*pv/100)+(cd.c*cv/100))));
+            safeSetText(`c${i}-gFat`, Math.max(0, Math.round((pd.f*pv/100)+(cd.f*cv/100))));
             
-            compSpecs[i] = { fullName: `${pd.name} med ${cd.name} (${v} ml)`, kcal: document.getElementById(`c${i}-kc`).innerText, pG: document.getElementById(`c${i}-gProt`).innerText, cG: document.getElementById(`c${i}-gCarb`).innerText };
+            compSpecs[i] = { fullName: `${pd.name} med ${cd.name} (${v} ml)`, kcal: document.getElementById(`c${i}-kc`)?.innerText || 0, pG: document.getElementById(`c${i}-gProt`)?.innerText || 0, cG: document.getElementById(`c${i}-gCarb`)?.innerText || 0 };
             
-            let vc = document.getElementById(`c${i}-vc`);
-            let vp = document.getElementById(`c${i}-vp`);
-            if(vc && vp) {
-                let totalFilledHeight = containerFillPct;
-                let protHeight = totalFilledHeight * (r / 100);
-                let carbHeight = totalFilledHeight * ((100 - r) / 100);
-                
-                vc.style.height = carbHeight + "%";
-                vp.style.height = protHeight + "%";
+            if(styles[i]) {
+                let vc = document.getElementById(`c${i}-vc`);
+                let vp = document.getElementById(`c${i}-vp`);
+                if(vc && vp) {
+                    let totalFilledHeight = containerFillPct;
+                    let protHeight = totalFilledHeight * (r / 100);
+                    let carbHeight = totalFilledHeight * ((100 - r) / 100);
+                    
+                    vc.style.height = carbHeight + "%";
+                    vp.style.height = protHeight + "%";
+                }
+            } else {
+                let vs = document.getElementById(`c${i}-vs`);
+                if(vs) { vs.style.height = containerFillPct + "%"; }
             }
 
             for (let [itemKey, factor] of Object.entries(pd.parts)) { if (!netNeeded[itemKey]) netNeeded[itemKey] = 0; netNeeded[itemKey] += pv * factor; }
@@ -914,8 +976,7 @@ function calc() {
         if(kl) kl.innerHTML += `<li>Mät upp exakt <strong>${Math.round(amount)}${unitNote}</strong> av <em>${item.name}</em> till tillagningen.</li>`;
     }
 
-    const totalCostVal = document.getElementById("total-cost-val");
-    if(totalCostVal) totalCostVal.innerText = totalPrice;
+    safeSetText("total-cost-val", Math.max(0, totalPrice));
     lastCalculatedLeftovers = leftovers;
     window.currentSpecs = compSpecs;
 }
@@ -956,8 +1017,8 @@ function renderSettings() {
     for (let [key, item] of Object.entries(dbStore)) {
         tbody.innerHTML += `<tr>
             <td><input type="text" id="edit_name_${key}" value="${item.name}"></td>
-            <td><input type="number" id="edit_size_${key}" value="${item.size}"> ${item.unit}</td>
-            <td><input type="number" id="edit_price_${key}" value="${item.price}"> kr</td>
+            <td><input type="number" id="edit_size_${key}" value="${item.size}" min="1"> ${item.unit}</td>
+            <td><input type="number" id="edit_price_${key}" value="${item.price}" min="0"> kr</td>
             <td><button class="del-btn-small" onclick="deleteIngredient('${key}')">❌</button></td>
         </tr>`;
     }
@@ -968,7 +1029,11 @@ function saveDatabaseEdits() {
         const nameInput = document.getElementById(`edit_name_${key}`);
         const sizeInput = document.getElementById(`edit_size_${key}`);
         const priceInput = document.getElementById(`edit_price_${key}`);
-        if (nameInput) { dbStore[key].name = nameInput.value; dbStore[key].size = Number(sizeInput.value); dbStore[key].price = Number(priceInput.value); }
+        if (nameInput) { 
+            dbStore[key].name = nameInput.value; 
+            dbStore[key].size = Math.max(1, Number(sizeInput.value)); 
+            dbStore[key].price = Math.max(0, Number(priceInput.value)); 
+        }
     }
     localStorage.setItem('dbStore60', JSON.stringify(dbStore));
     alert("✔️ Sparat!");
@@ -976,15 +1041,23 @@ function saveDatabaseEdits() {
 }
 
 function addNewIngredient() {
-    const type = document.getElementById('new-type').value; 
-    const name = document.getElementById('new-name').value;
-    const price = Number(document.getElementById('new-price').value);
-    const size = Number(document.getElementById('new-size').value);
-    const itemsPerPkg = Number(document.getElementById('new-count').value) || 0;
-    if(!name) return;
+    const type = document.getElementById('new-type')?.value || 'p'; 
+    const name = document.getElementById('new-name')?.value.trim();
+    const price = Math.max(0, Number(document.getElementById('new-price')?.value || 0));
+    const size = Math.max(1, Number(document.getElementById('new-size')?.value || 100));
+    const itemsPerPkg = Math.max(0, Number(document.getElementById('new-count')?.value || 0));
+    if(!name) return alert("Ange ett namn på råvaran!");
+    
     const id = 'custom_' + Date.now();
     dbStore[id] = { name: name, size: size, unit: 'g', price: price, itemsPerPkg: itemsPerPkg };
-    dbIng[type][id] = { name: name, kcal: Number(document.getElementById('new-kcal').value), p: Number(document.getElementById('new-p').value), c: Number(document.getElementById('new-c').value), f: Number(document.getElementById('new-f').value), parts: {} };
+    dbIng[type][id] = { 
+        name: name, 
+        kcal: Math.max(0, Number(document.getElementById('new-kcal')?.value || 100)), 
+        p: Math.max(0, Number(document.getElementById('new-p')?.value || 10)), 
+        c: Math.max(0, Number(document.getElementById('new-c')?.value || 10)), 
+        f: Math.max(0, Number(document.getElementById('new-f')?.value || 5)), 
+        parts: {} 
+    };
     dbIng[type][id].parts[id] = 1.0;
     localStorage.setItem('dbStore60', JSON.stringify(dbStore));
     localStorage.setItem('dbIng60', JSON.stringify(dbIng));
@@ -1042,7 +1115,10 @@ function importDataJSON(event) {
 
 function printSingleLabel(id) {
     const spec = window.currentSpecs[id]; const today = new Date().toLocaleDateString('sv-SE');
-    document.getElementById("print-area").innerHTML = `<div class="label-card"><h2>🍽️ ${spec.fullName}</h2><p>Kcal: ${spec.kcal} | P: ${spec.pG}g | K: ${spec.cG}g</p><p>Datum: ${today}</p></div>`;
+    const printArea = document.getElementById("print-area");
+    if(printArea) {
+        printArea.innerHTML = `<div class="label-card"><h2>🍽️ ${spec.fullName}</h2><p>Kcal: ${spec.kcal} | P: ${spec.pG}g | K: ${spec.cG}g</p><p>Datum: ${today}</p></div>`;
+    }
     window.print();
 }
 
@@ -1060,4 +1136,10 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFreezerDisplay(); 
     updatePantryDisplay();
     renderSettings();
+    
+    // Lyssnare för storkökets portioner så kalkylen uppdateras direkt
+    const batchYieldInput = document.getElementById('batch-yield');
+    if(batchYieldInput) {
+        batchYieldInput.addEventListener('input', calcBatch);
+    }
 });
