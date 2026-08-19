@@ -1,7 +1,8 @@
 # 🍱 Matlådebyggare 6.0
 
-En smart, snabb och mobilanpassad webbapp för att bygga, beräkna och hålla ordning på matlådor, storkok, frys- och skafferilager samt veckomatsedlar.
-Speciellt anpassad för silikonformar/kubmat.
+En smart, snabb och mobilanpassad webbapp för att bygga, beräkna och hålla ordning på matlådor, storkok, frys- och skafferilager samt veckomatsedlar. 
+
+*Speciellt anpassad för silikonformar och kubmat för ultimat frys- och portionslogistik!* (Tips på formar: [Cervera](https://www.cervera.se))
 
 Byggd i ren **HTML, CSS och JavaScript** utan krångliga ramverk – körs direkt i webbläsaren med stöd för både svenska och engelska.
 
